@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Birthdate</th>
+        <th>Active</th>
+        <th>Permissions</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let user of allUsers'>
+        <td>{{user.id}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.birthdate}}</td>
+        <td>{{user.active}}</td>
+        <td>{{user.permissions}}</td>
+        <td>
+            <button (click)="editUser(user.id)"> Edit </button>
+            <button (click)="deleteUserbyID(user.id)"> Delete </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
