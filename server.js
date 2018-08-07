@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use('/', express.static(__dirname + '/'));
+app.use('/', express.static(__dirname + '/dist/httpAngular3'));
 
 var dbfile = 'backend/table.json';
 
