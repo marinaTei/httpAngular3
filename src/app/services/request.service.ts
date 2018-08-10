@@ -1,32 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../user';
 
+import { User } from '../user';
 
 @Injectable({providedIn: 'root'})
 export class RequestService {
 
     constructor(private http: HttpClient) { }
 
-    getAllUsers(): Observable<User[]> {
+     getAllUsers(): Observable<User[]> {
         console.log('Getting all Users from the server.');
         return this.http.get<User[]>('/table/users');
     }
 
-    getUserById(id: string): Observable<User> {
+/*    getUserById(id: string): Observable<User> {
         return this.http.get<User>(`/table/users/${id}`, {
             headers: new HttpHeaders({
                 'Accept': 'application/json',
             })
         });
-    }
+    }*/
 
     addUser(newUser: User): Observable<User> {
         return this.http.post<User>('/table/create/user', newUser, {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            })
         });
     }
 

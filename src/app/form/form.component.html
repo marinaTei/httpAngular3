@@ -1,19 +1,53 @@
-<div *ngIf="showModal">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="changeValue()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="changeValue()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+<div *ngIf="getShow()">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 *ngIf="getValue() == 'post'" class="modal-title">Add new User</h5>
+                <h5 *ngIf="getValue() == 'put'" class="modal-title">Update User</h5>
+                <h5 *ngIf="getValue() == 'del'" class="modal-title">Delete User</h5>
+            </div>
+            <div class="modal-body">
+                <p *ngIf="getValue() == 'del'">Are you sure?</p>
+                <div *ngIf="getValue() == 'post' || getValue() == 'put'">
+                    <form #userForm="ngForm" name="form" > <!--(submit)="save($event)-->
+
+                        First Name:<br>
+                        <input type="text" #firstname autocomplete="off" value="{{userPut.firstname}}"
+                               (input)="constructUser('firstname', firstname.value)">
+                        <br>
+                        Last Name:<br>
+                        <input type="text" #lastname autocomplete="off" value="{{userPut.lastname}}"
+                               (input)="constructUser('lastname', lastname.value)"><br>
+                        Email:<br>
+                        <input type="text" #email autocomplete="off" value="{{userPut.email}}"
+                               (input)="constructUser('email', email.value)"><br>
+                        Birthdate:<br>
+                        <input type="date" #birthdate autocomplete="off" value="{{userPut.birthdate}}"
+                               (input)="constructUser('birthdate', birthdate.value)"><br>
+                        Active:
+                        <input type="checkbox" #active autocomplete="off" checked="{{userPut.active}}"
+                               (change)="constructUser('active', active.checked)"><br>
+                        Permissions:
+                        Read:
+                        <input type="checkbox" #read autocomplete="off" checked="{{userPut.permissions.r}}"
+                                (change)="constructUser('r', read.checked)">
+                        Write:
+                        <input type="checkbox" #write autocomplete="off" checked="{{userPut.permissions.w}}"
+                                (input)="constructUser('w', write.checked)">
+                        Execute:
+                        <input type="checkbox" #execute autocomplete="off" checked="{{userPut.permissions.x}}"
+                                (input)="constructUser('x', execute.checked)"><br>
+                <div *ngIf="getValue() == 'post' || getValue() == 'put'">
+                    <input type="submit" class="btn btn-primary" (click)="save()" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Close</button>
+                </div>
+                    </form>
+                </div>
+            </div>
+                <div *ngIf="getValue() == 'del'">
+                    <button type="button" class="btn btn-primary" (click)="deleteYes()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">No</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>

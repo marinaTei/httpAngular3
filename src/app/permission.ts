@@ -1,5 +1,5 @@
 export class Permission {
-    read: boolean;
-    write: boolean;
-    execute: boolean;
+    r: boolean;
+    w: boolean;
+    x: boolean;
 }

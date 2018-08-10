@@ -20,4 +20,3 @@ export class AppComponent {
         this.global.show = !this.global.show;
     }
 }
-

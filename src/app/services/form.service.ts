@@ -1,9 +1,18 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {User} from '../user';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FormService {
 
-  constructor() { }
+    localUser = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: false, permissions: {r: false, w: false, x: false}};
+
+    constructor() {
+    }
+
+    passUser(user: User) {
+        this.localUser = user;
+    }
 }
+
