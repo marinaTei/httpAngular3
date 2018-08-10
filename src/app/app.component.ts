@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
-import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
+import {Component} from '@angular/core';
+
+import {GlobalService} from './services/global.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
+    selector: 'app-root',
+    templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'Users App';
-  show = false;
-  value: string;
-  changeValue() {
-    this.show = !this.show;
-  }
+    title = 'Users App';
+
+    constructor(private global: GlobalService) {
+    }
+
+    changeValue() {
+        if (this.global.show === true) {
+            alert('Close without deleting user?');
+        }
+        this.global.value = 'post';
+        this.global.show = !this.global.show;
+    }
 }
+
