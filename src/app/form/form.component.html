@@ -25,7 +25,7 @@
                         <input type="date" #birthdate autocomplete="off" value="{{userPut.birthdate}}"
                                (input)="constructUser('birthdate', birthdate.value)"><br>
                         Active:
-                        <input type="checkbox" #active autocomplete="off" checked="{{userPut.active}}"
+                        <input type="checkbox" #active autocomplete="off" checked="{{user.active}}"
                                (change)="constructUser('active', active.checked)"><br>
                         Permissions:
                         Read:
