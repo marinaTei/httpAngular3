@@ -1,8 +1,29 @@
-table{
+table {
     width: 90%;
     margin: auto;
     text-align: center;
 }
-th{
+th {
     text-align: center;
+}
+
+pagination-controls ul {
+    width: 90%;
+    margin: auto;
+}
+.ngx-pagination .li .current {
+    background: darkgray;
+}
+
+#pag {
+    width: 750%;
+}
+
+#id {
+    width: 10%;
+}
+
+th button{
+    background-color: white;
+    padding-bottom: 0;
 }
