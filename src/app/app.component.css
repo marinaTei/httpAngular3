@@ -1,0 +1,35 @@
+.navbar-header{
+    height: 80px;
+    width: 100%;
+}
+
+.navbar-brand{
+    font-size: 300%;
+    margin-left: 3%;
+    padding-top: 2.5%;
+}
+.navbar-expand-lg{
+    width: 90%;
+    margin:auto;
+}
+
+#navbarSupportedContent{
+    padding: 0;
+}
+
+#add{
+    float: left;
+}
+
+.search{
+    float: right;
+}
+
+#pagination {
+    margin: auto;
+    width: 20%;
+
+}
+.page-link{
+    color: dimgray;
+}
