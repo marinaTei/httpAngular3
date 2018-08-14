@@ -1,30 +1,22 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header"
-             style="height: 80px; width: 100%">
-            <a class="navbar-brand"
-               style="font-size: 300%; margin-left: 3%; padding-top: 2.5%">{{title}}</a>
+        <div class="navbar-header">
+            <a class="navbar-brand">{{title}}</a>
         </div>
     </div>
 </nav>
+<app-form></app-form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light"
-     style="width: 90%; margin:auto">
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent"
-         style="padding: 0%">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <form class="form-inline my-2 my-lg-0">
-            <button type="button" class="btn btn-dark" (click)="changeValue()"
-                    style="float: left">Add New User
-            </button>
+            <button id="add" type="button" class="btn btn-dark" (click)="changeValue()">Add New User</button>
 
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                    style="float: right">Search
+            <button class="btn btn-outline-success my-2 my-sm-0 search" type="submit" >Search
             </button>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                   style="float: right">
+            <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)" >
             <!-- <button class="btn btn-outline-success my-2 my-sm-0"
                     style="float: right">
                 <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -38,11 +30,10 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </button> -->
-
         </form>
     </div>
 </nav>
 
 <app-table-of-users></app-table-of-users>
+
 </body>
-<app-form></app-form>
