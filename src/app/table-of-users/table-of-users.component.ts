@@ -7,6 +7,8 @@ import {GlobalService} from '../services/global.service';
 
 import {User} from '../user';
 
+import {SearchPipe} from '../search.pipe';
+
 import {eye, pencil, tools} from 'octicons';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
@@ -21,6 +23,8 @@ export class TableOfUsersComponent implements OnInit {
     public eye: SafeHtml;
     public tools: SafeHtml;
     allUsers: User[];
+    p = 1;
+    searchText = this.globalVar.search;
 
     constructor(private dataService: RequestService, private op: UserOpsService,
                 private form: FormService, private globalVar: GlobalService,
@@ -59,6 +63,43 @@ export class TableOfUsersComponent implements OnInit {
         await this.form.passUser(user);
         this.globalVar.value = 'put';
         this.open(user);
+    }
+
+    sort(n: number) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById('table');
+        switching = true;
+        dir = 'asc';
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('TD')[n];
+                y = rows[i + 1].getElementsByTagName('TD')[n];
+                if (dir === 'asc') {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === 'desc') {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount ++;
+            } else {
+                if (switchcount === 0 && dir === 'asc') {
+                    dir = 'desc';
+                    switching = true;
+                }
+            }
+        }
     }
 }
 
