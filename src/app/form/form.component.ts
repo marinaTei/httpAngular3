@@ -10,15 +10,14 @@ import {FormService} from '../services/form.service';
     styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-    // perm: Permission;
-    user = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: false, permissions: {r: false, w: false, x: false}};
-    userPut = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: false, permissions: {r: false, w: false, x: false}};
+    user = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
+    userPut = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
 
     constructUser(attr: string, val: any) {
          if (attr === 'r' || attr === 'w' || attr === 'x') {
-             this.user.permissions[attr] = val;
+             this.global.user.permissions[attr] = val;
         } else {
-            this.user[attr] = val;
+            this.global.user[attr] = val;
         }
     }
 
@@ -37,20 +36,27 @@ export class FormComponent implements OnInit {
     }
 
     async save() {
+       //  this.global.user.active = Boolean(this.global.user.active);
         if (this.global.value === 'put') {
             this.user.id = this.global.id;
-            await this.op.updateUser(this.user);
+            await this.op.updateUser(this.global.user);
         }
         if (this.global.value === 'post') {
-            await this.op.postUser(this.user);
+            await this.op.postUser(this.global.user);
         }
-        // this.emptyForm();
+        // console.log('before empty');
+        this.emptyForm();
         this.close();
     }
-    /*emptyForm(){
-        this.userPut.permissions.r = false;
-        this.user.permissions.r = false;
-    }*/
+    emptyForm() {
+        this.global.user = null;
+        this.user = this.global.user;
+        this.userPut.active = null;
+
+        // this.userPut.permissions.r = false;
+        // this.user.permissions.r = false;
+        // console.log('after empty');
+    }
 
     getShow(): boolean {
         if (this.getValue() === 'put') { this.userPut = this.form.localUser; }
