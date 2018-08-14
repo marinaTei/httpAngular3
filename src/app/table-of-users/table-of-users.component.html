@@ -1,28 +1,45 @@
-<table id='table' class="table table-striped">
+<table id='table' class="table table-striped" >
     <thead>
     <tr>
-        <th>ID</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Birthdate</th>
-        <th>Active</th>
-        <th>Permissions</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(0)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>ID</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Firstname</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(2)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Lastname</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(3)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Email</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(4)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Birthdate</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(5)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Active</th>
+        <th><button type="button" class="btn btn-secondary" (click)="sort(6)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Permissions</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor='let user of allUsers'>
-        <td>{{user.id}}</td>
+    <tr *ngFor='let user of allUsers | search : searchText | paginate: { itemsPerPage: 10, currentPage: p }'>
+        <td id="id">{{user.id}}</td>
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td>
         <td>{{user.birthdate}}</td>
-        <td class="alert alert-danger" *ngIf="user.active === false || user.active === 'false'; else trueCase">Inactive</td>
+        <td class="alert alert-danger"
+            *ngIf="user.active === false || user.active === 'false' || user.active === null; else trueCase">Inactive
+        </td>
         <ng-template #trueCase>
             <td class="alert alert-success">Active</td>
         </ng-template>
-        <td><button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+        <td>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
                     title="Read"
                     *ngIf="user.permissions.r === 'true' || user.permissions.r === true"
                     [innerHTML]="eye"></button>
@@ -36,9 +53,12 @@
                     [innerHTML]="tools"></button>
         </td>
         <td>
-            <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit </button>
-            <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user)"> Delete </button>
+            <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit</button>
+            <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user)"> Delete</button>
         </td>
     </tr>
     </tbody>
 </table>
+<div id="pag">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
