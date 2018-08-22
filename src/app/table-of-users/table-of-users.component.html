@@ -26,12 +26,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor='let user of allUsers | search : searchText | paginate: { itemsPerPage: 10, currentPage: p }'>
-        <td id="id">{{user.id}}</td>
+    <tr *ngFor='let user of allUsers | search : searchText | paginate: { itemsPerPage: 10, currentPage: p } '> <!--  | paginate: { itemsPerPage: 10, currentPage: p } -->
+        <td id="id">{{user.id}} {{searchText}}</td>
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.birthdate}}</td>
+        <td>{{user.birthdate | date: 'mediumDate' }}</td>
         <td class="alert alert-danger"
             *ngIf="user.active === false || user.active === 'false' || user.active === null; else trueCase">Inactive
         </td>
