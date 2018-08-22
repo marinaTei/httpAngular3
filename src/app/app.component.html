@@ -16,24 +16,11 @@
 
             <button class="btn btn-outline-success my-2 my-sm-0 search" type="submit" >Search
             </button>
-            <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)" >
-            <!-- <button class="btn btn-outline-success my-2 my-sm-0"
-                    style="float: right">
-                <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Search By
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </button> -->
+            <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)">
         </form>
     </div>
 </nav>
 
-<app-table-of-users></app-table-of-users>
+<app-table-of-users [searchText] = searchTxt></app-table-of-users>
 
 </body>
