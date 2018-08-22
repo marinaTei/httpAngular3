@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NgxPaginationModule} from 'node_modules/ngx-pagination';
 
 import {GlobalService} from './services/global.service';
 
@@ -10,12 +9,13 @@ import {GlobalService} from './services/global.service';
 })
 export class AppComponent {
     title = 'Users App';
+    searchTxt: string;
 
     constructor(private global: GlobalService) {
     }
     search(value: any) {
         console.log(value);
-        this.global.search = value;
+        this.searchTxt = value;
     }
     changeValue() {
 
