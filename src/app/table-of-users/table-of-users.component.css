@@ -7,16 +7,16 @@ th {
     text-align: center;
 }
 
-pagination-controls ul {
-    width: 90%;
+.ngx-pagination ul {
+    width: 20%;
     margin: auto;
 }
 .ngx-pagination .li .current {
     background: darkgray;
 }
 
-#pag {
-    width: 750%;
+#pag {/*
+ width: 75%;*/
 }
 
 #id {
