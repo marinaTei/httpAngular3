@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {RequestService} from '../services/request.service';
 import {UserOpsService} from '../services/user-ops.service';
@@ -6,8 +6,6 @@ import {FormService} from '../services/form.service';
 import {GlobalService} from '../services/global.service';
 
 import {User} from '../user';
-
-import {SearchPipe} from '../search.pipe';
 
 import {eye, pencil, tools} from 'octicons';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -19,12 +17,13 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 })
 
 export class TableOfUsersComponent implements OnInit {
+    @Input() searchText: string;
     public pencil: SafeHtml;
     public eye: SafeHtml;
     public tools: SafeHtml;
     allUsers: User[];
     p = 1;
-    searchText = this.globalVar.search;
+    // searchText = this.globalVar.search;
 
     constructor(private dataService: RequestService, private op: UserOpsService,
                 private form: FormService, private globalVar: GlobalService,
