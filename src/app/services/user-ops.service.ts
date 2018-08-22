@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { RequestService } from './request.service';
-import { User } from '../user';
+import {RequestService} from './request.service';
+import {User} from '../user';
 
 @Injectable({ providedIn: 'root'})
 export class UserOpsService {
@@ -31,7 +31,7 @@ export class UserOpsService {
     async deleteUser(id: string) {
         await this.req.deleteUser(id)
             .subscribe(
-                (data: void) => {},
+                (data: void) => { this.req.getAllUsers(); },
                 (err: any) => console.log(err)
             );
     }
@@ -40,7 +40,7 @@ export class UserOpsService {
 
       await this.req.updateUser(user)
           .subscribe(
-              (data: any) => {},
+              (data: any) => { this.req.getAllUsers(); },
               (err: any) => console.log(err)
           );
     }
@@ -48,7 +48,7 @@ export class UserOpsService {
     async postUser(user: User) {
       await this.req.addUser(user)
           .subscribe(
-              (data: any) => {},
+              (data: any) => { this.req.getAllUsers(); },
               (err: any) => console.log(err)
           );
     }
