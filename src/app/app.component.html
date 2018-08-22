@@ -13,14 +13,10 @@
 
         <form class="form-inline my-2 my-lg-0">
             <button id="add" type="button" class="btn btn-dark" (click)="changeValue()">Add New User</button>
-
-            <button class="btn btn-outline-success my-2 my-sm-0 search" type="submit" >Search
-            </button>
-            <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)">
         </form>
     </div>
 </nav>
 
-<app-table-of-users [searchText] = searchTxt></app-table-of-users>
+<app-table-of-users></app-table-of-users>
 
 </body>

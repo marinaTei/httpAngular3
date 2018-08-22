@@ -8,14 +8,16 @@ export class UserOpsService {
 
   constructor(private req: RequestService) { }
 
-    async getUsers() {
+    getUsers() {
 
-        await this.req.getAllUsers()
+        this.req.getAllUsers()
             .subscribe(
                 (data: any) => {
                     console.log(data.rows);
                     return data.rows;
-                }
+                },
+                (err: any) => { console.log(err); },
+                () => { console.log('completed'); }
             );
     }
 /*     async getUserById(id: string) {
@@ -28,25 +30,25 @@ export class UserOpsService {
             );
     }*/
 
-    async deleteUser(id: string) {
-        await this.req.deleteUser(id)
+    deleteUser(id: string) {
+        this.req.deleteUser(id)
             .subscribe(
                 (data: void) => { this.req.getAllUsers(); },
                 (err: any) => console.log(err)
             );
     }
 
-    async updateUser(user: User) {
+    updateUser(user: User) {
 
-      await this.req.updateUser(user)
+      this.req.updateUser(user)
           .subscribe(
               (data: any) => { this.req.getAllUsers(); },
               (err: any) => console.log(err)
           );
     }
 
-    async postUser(user: User) {
-      await this.req.addUser(user)
+    postUser(user: User) {
+      this.req.addUser(user)
           .subscribe(
               (data: any) => { this.req.getAllUsers(); },
               (err: any) => console.log(err)

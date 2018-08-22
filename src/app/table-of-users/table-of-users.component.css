@@ -27,3 +27,7 @@ th button{
     background-color: white;
     padding-bottom: 0;
 }
+
+#search{
+    width: 15%;
+}

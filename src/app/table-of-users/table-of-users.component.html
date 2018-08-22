@@ -1,3 +1,5 @@
+<div id="searchDiv"><input id="search" class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)"></div>
+
 <table id='table' class="table table-striped" >
     <thead>
     <tr>
@@ -26,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor='let user of allUsers | search : searchText | paginate: { itemsPerPage: 10, currentPage: p } '> <!--  | paginate: { itemsPerPage: 10, currentPage: p } -->
+    <tr *ngFor='let user of allUsers | paginate: { itemsPerPage: 10, currentPage: p } '> <!--| search : searchText  | paginate: { itemsPerPage: 10, currentPage: p } -->
         <td id="id">{{user.id}} {{searchText}}</td>
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>

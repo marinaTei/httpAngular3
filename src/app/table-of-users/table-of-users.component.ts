@@ -22,6 +22,7 @@ export class TableOfUsersComponent implements OnInit {
     public eye: SafeHtml;
     public tools: SafeHtml;
     allUsers: User[];
+    globalAllUsers: User[];
     p = 1;
     // searchText = this.globalVar.search;
 
@@ -30,18 +31,37 @@ export class TableOfUsersComponent implements OnInit {
                 private sanitizer: DomSanitizer) {
     }
 
-    async ngOnInit() {
-        await this.getUsers();
+    ngOnInit() {
+        this.getUsers();
         this.pencil = this.sanitizer.bypassSecurityTrustHtml(pencil.toSVG());
         this.eye = this.sanitizer.bypassSecurityTrustHtml(eye.toSVG());
         this.tools = this.sanitizer.bypassSecurityTrustHtml(tools.toSVG());
     }
 
-    async getUsers() {
-        await this.dataService.getAllUsers()
+    toBool(aux: any): string {
+        if (aux === 'true' || aux === true) { return 'active'; } else if (aux === 'false' || aux === false) { return 'inactive'; }
+    }
+
+    search(text: string) {
+        text = text.toLocaleLowerCase();
+        this.allUsers = this.globalAllUsers.filter( user => {
+            if (user.firstname.toString().toLowerCase().includes(text.toString()) ||
+                user.lastname.toString().toLowerCase().includes(text) ||
+                user.email.toString().toLowerCase().includes(text) ||
+                user.id.toString().toLowerCase().includes(text.toString()) ||
+                this.toBool(user.active).includes(text)
+            ) {
+                return user;
+            }
+        });
+    }
+
+    getUsers() {
+        this.dataService.getAllUsers()
             .subscribe(
                 (data: any) => {
                     this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                    this.globalAllUsers = this.allUsers;
                     console.log(data.rows);
                 }
             );
@@ -58,8 +78,8 @@ export class TableOfUsersComponent implements OnInit {
         this.open(user);
     }
 
-    async changeToPut(user: User) {
-        await this.form.passUser(user);
+    changeToPut(user: User) {
+        this.form.passUser(user);
         this.globalVar.value = 'put';
         this.open(user);
     }
