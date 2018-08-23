@@ -3,10 +3,11 @@ import {Injectable} from '@angular/core';
 import {RequestService} from './request.service';
 import {User} from '../user';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({providedIn: 'root'})
 export class UserOpsService {
 
-  constructor(private req: RequestService) { }
+    constructor(private req: RequestService) {
+    }
 
     getUsers() {
 
@@ -16,42 +17,56 @@ export class UserOpsService {
                     console.log(data.rows);
                     return data.rows;
                 },
-                (err: any) => { console.log(err); },
-                () => { console.log('completed'); }
-            );
-    }
-/*     async getUserById(id: string) {
-
-         await this.req.getUserById(id)
-            .subscribe(
-                (data: any) => {
-                    this.userAux = data.valueOf();
+                (err: any) => {
+                    console.log(err);
+                },
+                () => {
+                    console.log('completed');
                 }
             );
-    }*/
+    }
+
+    /*     async getUserById(id: string) {
+
+             await this.req.getUserById(id)
+                .subscribe(
+                    (data: any) => {
+                        this.userAux = data.valueOf();
+                    }
+                );
+        }*/
 
     deleteUser(id: string) {
         this.req.deleteUser(id)
             .subscribe(
-                (data: void) => { this.req.getAllUsers(); },
+                (data: void) => {
+                    this.req.getAllUsers();
+                },
                 (err: any) => console.log(err)
             );
     }
 
     updateUser(user: User) {
 
-      this.req.updateUser(user)
-          .subscribe(
-              (data: any) => { this.req.getAllUsers(); },
-              (err: any) => console.log(err)
-          );
+        this.req.updateUser(user)
+            .subscribe(
+                (data: any) => {
+                    this.req.getAllUsers();
+                },
+                (err: any) => console.log(err)
+            );
     }
 
     postUser(user: User) {
-      this.req.addUser(user)
-          .subscribe(
-              (data: any) => { this.req.getAllUsers(); },
-              (err: any) => console.log(err)
-          );
+        if (user.active === null) {
+            user.active = false;
+        }
+        this.req.addUser(user)
+            .subscribe(
+                (data: any) => {
+                    this.req.getAllUsers();
+                },
+                (err: any) => console.log(err)
+            );
     }
 }

@@ -44,13 +44,15 @@ export class TableOfUsersComponent implements OnInit {
 
     search(text: string) {
         text = text.toLocaleLowerCase();
+        console.log(text);
+        console.log(this.globalAllUsers);
         this.allUsers = this.globalAllUsers.filter( user => {
+            console.log(user.active);
             if (user.firstname.toString().toLowerCase().includes(text.toString()) ||
                 user.lastname.toString().toLowerCase().includes(text) ||
                 user.email.toString().toLowerCase().includes(text) ||
                 user.id.toString().toLowerCase().includes(text.toString()) ||
-                this.toBool(user.active).includes(text)
-            ) {
+                this.toBool(user.active).includes(text)) {
                 return user;
             }
         });
