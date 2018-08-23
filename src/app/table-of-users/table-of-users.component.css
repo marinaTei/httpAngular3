@@ -28,6 +28,34 @@ th button{
     padding-bottom: 0;
 }
 
-#search{
-    width: 15%;
+.navbar-expand-lg{
+    width: 90%;
+    margin:auto;
 }
+
+#navbarSupportedContent{
+    padding: 0;
+}
+
+#search{
+    width: 50%;
+    display: inline-block;
+}
+
+form{
+    display: inline-block;
+    width: 50%;
+}
+ #search input{
+     width: 50%;
+     float: right;
+ }
+
+ #add{
+     float: left;
+ }
+
+ #list{
+     width: 20%;
+     margin: auto;
+ }

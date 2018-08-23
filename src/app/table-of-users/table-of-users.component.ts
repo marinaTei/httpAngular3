@@ -4,6 +4,7 @@ import {RequestService} from '../services/request.service';
 import {UserOpsService} from '../services/user-ops.service';
 import {FormService} from '../services/form.service';
 import {GlobalService} from '../services/global.service';
+import {PaginationService} from '../services/pagination.service';
 
 import {User} from '../user';
 
@@ -22,13 +23,10 @@ export class TableOfUsersComponent implements OnInit {
     public eye: SafeHtml;
     public tools: SafeHtml;
     allUsers: User[];
-    globalAllUsers: User[];
-    p = 1;
-    // searchText = this.globalVar.search;
 
     constructor(private dataService: RequestService, private op: UserOpsService,
-                private form: FormService, private globalVar: GlobalService,
-                private sanitizer: DomSanitizer) {
+                private form: FormService, public globalVar: GlobalService,
+                private sanitizer: DomSanitizer, public paginationService: PaginationService) {
     }
 
     ngOnInit() {
@@ -38,16 +36,42 @@ export class TableOfUsersComponent implements OnInit {
         this.tools = this.sanitizer.bypassSecurityTrustHtml(tools.toSVG());
     }
 
+    displayUsers() {
+        console.log('before for');
+        this.globalVar.arrayOfUsers.
+        for (let i = 0; i < this.paginationService.numberOfUsers; i++) {
+            if (this.paginationService.visibility[i]) {
+                console.log('before push');
+                this.globalVar.arrayOfUsers.push(this.allUsers[i]);
+            }
+        }
+    }
+
+    getUsers() {
+
+        this.dataService.getAllUsers()
+            .subscribe(
+                (data: any) => {
+                    this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                    this.globalVar.arrayOfUsers = this.allUsers;
+                    console.log('before update');
+                    this.paginationService.update(this.allUsers.length, 5, this.allUsers[0].id,
+                        this.allUsers[4].id, 0);
+                    console.log('before display');
+                    this.displayUsers();
+                    console.log(this.allUsers);
+                    console.log(this.paginationService.numberOfUsers);
+                }
+            );
+    }
+
     toBool(aux: any): string {
         if (aux === 'true' || aux === true) { return 'active'; } else if (aux === 'false' || aux === false) { return 'inactive'; }
     }
 
     search(text: string) {
         text = text.toLocaleLowerCase();
-        console.log(text);
-        console.log(this.globalAllUsers);
-        this.allUsers = this.globalAllUsers.filter( user => {
-            console.log(user.active);
+        this.globalVar.arrayOfUsers = this.allUsers.filter( user => {
             if (user.firstname.toString().toLowerCase().includes(text.toString()) ||
                 user.lastname.toString().toLowerCase().includes(text) ||
                 user.email.toString().toLowerCase().includes(text) ||
@@ -55,18 +79,17 @@ export class TableOfUsersComponent implements OnInit {
                 this.toBool(user.active).includes(text)) {
                 return user;
             }
+            this.displayUsers();
         });
     }
+    changeToPost() {
 
-    getUsers() {
-        this.dataService.getAllUsers()
-            .subscribe(
-                (data: any) => {
-                    this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
-                    this.globalAllUsers = this.allUsers;
-                    console.log(data.rows);
-                }
-            );
+        if (this.globalVar.show === true) {
+            alert('Close without deleting user?');
+        }
+        this.globalVar.value = 'post';
+        this.globalVar.show = !this.globalVar.show;
+        this.globalVar.user.active = null;
     }
 
     open(user: User) {
@@ -85,42 +108,15 @@ export class TableOfUsersComponent implements OnInit {
         this.globalVar.value = 'put';
         this.open(user);
     }
-
-    sort(n: number) {
-        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById('table');
-        switching = true;
-        dir = 'asc';
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName('TD')[n];
-                y = rows[i + 1].getElementsByTagName('TD')[n];
-                if (dir === 'asc') {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir === 'desc') {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
+    sortTest(key: string) {
+        this.globalVar.arrayOfUsers.sort(function(user1: User, user2: User): number {
+            let x = user1[key].toLowerCase();
+            let y = user2[key].toLowerCase();
+            if (key === 'id') {
+                x = +x.slice(3);
+                y = +y.slice(3);
             }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                switchcount ++;
-            } else {
-                if (switchcount === 0 && dir === 'asc') {
-                    dir = 'desc';
-                    switching = true;
-                }
-            }
-        }
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
     }
 }
-

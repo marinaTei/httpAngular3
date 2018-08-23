@@ -1,5 +1,5 @@
 export class Permission {
-    r: boolean;
-    w: boolean;
-    x: boolean;
+    r: boolean | string;
+    w: boolean | string;
+    x: boolean | string;
 }

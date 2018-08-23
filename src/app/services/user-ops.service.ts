@@ -2,39 +2,13 @@ import {Injectable} from '@angular/core';
 
 import {RequestService} from './request.service';
 import {User} from '../user';
+import {GlobalService} from './global.service';
 
 @Injectable({providedIn: 'root'})
 export class UserOpsService {
 
-    constructor(private req: RequestService) {
+    constructor(private req: RequestService, private globalService: GlobalService) {
     }
-
-    getUsers() {
-
-        this.req.getAllUsers()
-            .subscribe(
-                (data: any) => {
-                    console.log(data.rows);
-                    return data.rows;
-                },
-                (err: any) => {
-                    console.log(err);
-                },
-                () => {
-                    console.log('completed');
-                }
-            );
-    }
-
-    /*     async getUserById(id: string) {
-
-             await this.req.getUserById(id)
-                .subscribe(
-                    (data: any) => {
-                        this.userAux = data.valueOf();
-                    }
-                );
-        }*/
 
     deleteUser(id: string) {
         this.req.deleteUser(id)
@@ -66,7 +40,8 @@ export class UserOpsService {
                 (data: any) => {
                     this.req.getAllUsers();
                 },
-                (err: any) => console.log(err)
+                (err: any) => console.log(err),
+                () => console.log('post')
             );
     }
 }

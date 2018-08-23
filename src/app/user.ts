@@ -6,6 +6,6 @@ export class User {
     lastname: string;
     email: string;
     birthdate: string;
-    active: boolean;
+    active: boolean | string;
     permissions: Permission;
 }

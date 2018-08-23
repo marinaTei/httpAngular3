@@ -2,26 +2,24 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {NgxPaginationModule} from 'ngx-pagination';
+// import {NgxPaginationModule} from 'ngx-pagination';
 
 import {AppComponent} from './app.component';
 import {TableOfUsersComponent} from './table-of-users/table-of-users.component';
 import {FormComponent} from './form/form.component';
 import {GlobalService} from './services/global.service';
-import {SearchPipe} from './search.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableOfUsersComponent,
-    FormComponent,
-      SearchPipe
+    FormComponent
   ],
   imports: [
       BrowserModule,
       FormsModule,
       HttpClientModule,
-      NgxPaginationModule
+      // NgxPaginationModule
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent]

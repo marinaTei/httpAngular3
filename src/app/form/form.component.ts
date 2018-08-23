@@ -3,6 +3,7 @@ import {GlobalService} from '../services/global.service';
 import {UserOpsService} from '../services/user-ops.service';
 import {User} from '../user';
 import {FormService} from '../services/form.service';
+import {RequestService} from '../services/request.service';
 
 @Component({
     selector: 'app-form',
@@ -21,45 +22,77 @@ export class FormComponent implements OnInit {
         }
     }
 
-    constructor(private global: GlobalService, private op: UserOpsService, private form: FormService) {
+    constructor(private global: GlobalService, private op: UserOpsService, private form: FormService,
+                private requestService: RequestService) {
     }
 
     close() {
+        this.userPut = <User>
+            {firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
+        // this.userPut.permissions.r = null;
+        // this.userPut.permissions.x = null;
+        // this.userPut.permissions.w = null;
+        // this.userPut.active = null;
+        this.userPut.firstname = '';
         console.log('close');
         this.global.show = !this.global.show;
     }
 
-    async deleteYes() {
-        await this.op.deleteUser(this.global.id);
-        this.op.getUsers();
+    deleteYes() {
+        this.op.deleteUser(this.global.id);
+        this.requestService.getAllUsers()
+            .subscribe(
+                (data: any) => {
+                    // console.log(data.rows);
+                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                    console.log(this.global.arrayOfUsers);
+                },
+                (err: any) => {
+                    console.log(err);
+                },
+                () => {
+                    console.log('get');
+                }
+            );
         this.close();
     }
 
-    async save() {
-       //  this.global.user.active = Boolean(this.global.user.active);
+    save() {
         if (this.global.value === 'put') {
-            this.user.id = this.global.id;
-            await this.op.updateUser(this.global.user);
+            // this.user.id = this.global.id;
+            this.op.updateUser(this.global.user);
         }
         if (this.global.value === 'post') {
-            await this.op.postUser(this.global.user);
+            this.op.postUser(this.global.user);
         }
-        // console.log('before empty');
-        this.emptyForm();
+        this.requestService.getAllUsers()
+            .subscribe(
+                (data: any) => {
+                    // console.log(data.rows);
+                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                    console.log(this.global.arrayOfUsers);
+                },
+                (err: any) => {
+                    console.log(err);
+                },
+                () => {
+                    console.log('get');
+                }
+            );
         this.close();
-    }
-    emptyForm() {
-        this.global.user = null;
-        this.user = this.global.user;
-        this.userPut.active = null;
-
-        // this.userPut.permissions.r = false;
-        // this.user.permissions.r = false;
-        // console.log('after empty');
     }
 
     getShow(): boolean {
-        if (this.getValue() === 'put') { this.userPut = this.form.localUser; }
+        if (this.getValue() === 'put') {
+            this.userPut = this.form.localUser;
+            (!this.userPut.active) ? this.userPut.active = null : this.userPut.active = true;
+            (!this.userPut.permissions.r) ? this.userPut.permissions.r = null : this.userPut.permissions.r = true;
+            (!this.userPut.permissions.w) ? this.userPut.permissions.w = null : this.userPut.permissions.w = true;
+            (!this.userPut.permissions.x) ? this.userPut.permissions.x = null : this.userPut.permissions.x = true;
+        } else if (this.getValue() === 'post') {
+            this.userPut = <User>
+                {firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
+        }
         return this.global.show;
     }
 
@@ -68,7 +101,5 @@ export class FormComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.userPut.permissions.r = false;
-        // '', lastname: '', email: '', birthdate: '', active: false, permissions: {r: false, w: false, x: false}};
     }
 }

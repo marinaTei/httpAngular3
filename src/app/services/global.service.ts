@@ -10,7 +10,7 @@ export class GlobalService {
   value: string;
   id: string;
   user = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: false, w: false, x: false}};
-  search: string;
+  arrayOfUsers: User[];
 
     constructor() { }
 }

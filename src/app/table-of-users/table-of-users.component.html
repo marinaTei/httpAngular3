@@ -1,41 +1,87 @@
-<div id="searchDiv"><input id="search" class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)"></div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-<table id='table' class="table table-striped" >
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0">
+            <button id="add" type="button" class="btn btn-dark" (click)="changeToPost()">Add New User</button>
+        </form>
+        <div id="search" >
+        <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search"
+               (input)="search($event.target.value)">
+        </div>
+    </div>
+</nav>
+
+<table id='table' class="table table-striped">
     <thead>
     <tr>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(0)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>ID</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(1)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Firstname</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(2)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Lastname</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(3)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Email</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(4)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Birthdate</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(5)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-            <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Active</th>
-        <th><button type="button" class="btn btn-secondary" (click)="sort(6)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-                <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg></button>Permissions</th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('id')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            ID
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('firstname')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Firstname
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('lastname')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Lastname
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('email')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Email
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('birthdate')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Birthdate
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary" (click)="sortTest('active')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Active
+        </th>
+        <th>
+            <button type="button" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
+                </svg>
+            </button>
+            Permissions
+        </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor='let user of allUsers | paginate: { itemsPerPage: 10, currentPage: p } '> <!--| search : searchText  | paginate: { itemsPerPage: 10, currentPage: p } -->
-        <td id="id">{{user.id}} {{searchText}}</td>
+    <tr *ngFor='let user of globalVar.arrayOfUsers'>
+        <td id="id">{{user.id}}</td>
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td>
         <td>{{user.birthdate | date: 'mediumDate' }}</td>
         <td class="alert alert-danger"
-            *ngIf="user.active === false || user.active === 'false' || user.active === null; else trueCase">Inactive
+            *ngIf="user.active === false || user.active === null; else trueCase">Inactive
         </td>
         <ng-template #trueCase>
             <td class="alert alert-success">Active</td>
@@ -43,15 +89,15 @@
         <td>
             <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
                     title="Read"
-                    *ngIf="user.permissions.r === 'true' || user.permissions.r === true"
+                    *ngIf="user.permissions.r === true"
                     [innerHTML]="eye"></button>
             <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
                     title="Write"
-                    *ngIf="user.permissions.w === 'true' || user.permissions.w === true"
+                    *ngIf="user.permissions.w === true"
                     [innerHTML]="pencil"></button>
             <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
                     title="Execute"
-                    *ngIf="user.permissions.x === 'true' || user.permissions.x === true"
+                    *ngIf="user.permissions.x === true"
                     [innerHTML]="tools"></button>
         </td>
         <td>
@@ -61,6 +107,22 @@
     </tr>
     </tbody>
 </table>
-<div id="pag">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+<div id="pagination" *ngIf="paginationService.numberOfUsers"
+     style="width:90%; margin: auto">
+    <p style="display: inline-block; width:30%; margin-top: 5px">
+        Displaying {{paginationService.usersPerPage}} users ({{paginationService.from}} to {{paginationService.to}}) of
+        {{paginationService.numberOfUsers}}.</p>
+    <ul class="pagination justify-content-center"
+        style="float: right; margin-top: 5px">
+        <li class="page-item disabled">
+            <button class="page-link btn btn-outline-dark" tabindex="-1">Previous</button>
+        </li>
+        <li class="page-item"><button class="page-link btn btn-outline-dark" >1</button></li>
+        <li class="page-item"><button class="page-link btn btn-outline-dark" >2</button></li>
+        <li class="page-item"><button class="page-link btn btn-outline-dark" >3</button></li>
+        <li class="page-item">
+            <button class="page-link btn btn-outline-dark" >Next</button>
+        </li>
+    </ul>
 </div>
