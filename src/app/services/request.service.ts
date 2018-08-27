@@ -14,14 +14,6 @@ export class RequestService {
         return this.http.get<User[]>('/table/users');
     }
 
-/*    getUserById(id: string): Observable<User> {
-        return this.http.get<User>(`/table/users/${id}`, {
-            headers: new HttpHeaders({
-                'Accept': 'application/json',
-            })
-        });
-    }*/
-
     addUser(newUser: User): Observable<User> {
         return this.http.post<User>('/table/create/user', newUser, {
         });

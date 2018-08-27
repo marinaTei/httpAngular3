@@ -12,6 +12,7 @@ export class FormService {
     }
 
     passUser(user: User) {
+        console.log(user.id, 'passUser()');
         this.localUser = user;
     }
 }

@@ -29,32 +29,31 @@ export class FormComponent implements OnInit {
     close() {
         this.userPut = <User>
             {firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
-        // this.userPut.permissions.r = null;
-        // this.userPut.permissions.x = null;
-        // this.userPut.permissions.w = null;
-        // this.userPut.active = null;
         this.userPut.firstname = '';
         console.log('close');
         this.global.show = !this.global.show;
     }
 
     deleteYes() {
-        this.requestService.deleteUser(this.global.id)
+        this.requestService.deleteUser(this.global.user.id)
             .subscribe(
-                (data: any) => {console.log('delete'); }
-            );
-        this.requestService.getAllUsers()
-            .subscribe(
-                (data: any) => {
-                    // console.log(data.rows);
-                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
-                    console.log(this.global.arrayOfUsers);
+                (dataDel: any) => {console.log('delete');
+                    this.requestService.getAllUsers()
+                        .subscribe(
+                            (data: any) => {
+                                this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                                console.log(this.global.arrayOfUsers);
+                            },
+                            (err: any) => {
+                                console.log(err);
+                            },
+                            () => {
+                                console.log('get');
+                            }
+                        );
                 },
                 (err: any) => {
                     console.log(err);
-                },
-                () => {
-                    console.log('get');
                 }
             );
         this.close();
@@ -64,34 +63,59 @@ export class FormComponent implements OnInit {
         if (this.global.value === 'put') {
             this.requestService.updateUser(this.global.user)
                 .subscribe(
-                    (data: any) => {console.log('update'); }
+                    (dataPut: any) => {
+                        console.log('update');
+                        this.requestService.getAllUsers()
+                            .subscribe(
+                                (data: any) => {
+                                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                                    console.log(this.global.arrayOfUsers);
+                                },
+                                (err: any) => {
+                                    console.log(err);
+                                },
+                                () => {
+                                    console.log('get');
+                                }
+                            );
+                    },
+                    (err: any) => {
+                        console.log(err);
+                    }
                 );
         }
         if (this.global.value === 'post') {
             this.requestService.addUser(this.global.user)
                 .subscribe(
-                    (data: any) => {console.log('post'); }
+                    (dataPost: any) => {
+                        console.log('post');
+                        this.requestService.getAllUsers()
+                            .subscribe(
+                                (data: any) => {
+                                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
+                                    console.log(this.global.arrayOfUsers);
+                                },
+                                (err: any) => {
+                                    console.log(err);
+                                },
+                                () => {
+                                    console.log('get');
+                                }
+                            );
+                    },
+                    (err: any) => {
+                        console.log(err);
+                    }
                 );
         }
-        this.requestService.getAllUsers()
-            .subscribe(
-                (data: any) => {
-                    this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
-                    console.log(this.global.arrayOfUsers);
-                },
-                (err: any) => {
-                    console.log(err);
-                },
-                () => {
-                    console.log('get');
-                }
-            );
+
         this.close();
     }
 
     getShow(): boolean {
         if (this.getValue() === 'put') {
             this.userPut = this.form.localUser;
+            this.global.user = this.form.localUser;
             (!this.userPut.active) ? this.userPut.active = null : this.userPut.active = true;
             (!this.userPut.permissions.r) ? this.userPut.permissions.r = null : this.userPut.permissions.r = true;
             (!this.userPut.permissions.w) ? this.userPut.permissions.w = null : this.userPut.permissions.w = true;

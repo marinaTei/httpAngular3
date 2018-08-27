@@ -6,7 +6,8 @@
         </form>
         <div id="search" >
         <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search"
-               (input)="search($event.target.value)">
+               (input)="search($event.target.value)"
+               (focus)="refreshUsers($event.target.value)" >
         </div>
     </div>
 </nav>
@@ -111,13 +112,13 @@
     <ul class="pagination justify-content-center"
         style="float: right; margin-top: 5px">
         <li class="page-item disabled">
-            <button class="page-link btn btn-outline-dark" tabindex="-1">Previous</button>
+            <button *ngIf="paginationService.curentPage !== 1" class="page-link btn btn-outline-dark" tabindex="-1">Previous</button>
         </li>
         <li class="page-item"><button class="page-link btn btn-outline-dark" >1</button></li>
         <li class="page-item"><button class="page-link btn btn-outline-dark" >2</button></li>
         <li class="page-item"><button class="page-link btn btn-outline-dark" >3</button></li>
         <li class="page-item">
-            <button class="page-link btn btn-outline-dark" >Next</button>
+            <button *ngIf="paginationService.curentPage !== paginationService.numberOfPages" class="page-link btn btn-outline-dark" >Next</button>
         </li>
     </ul>
 </div>

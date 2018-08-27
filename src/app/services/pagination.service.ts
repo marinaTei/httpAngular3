@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {User} from '../user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,28 +9,17 @@ export class PaginationService {
   usersPerPage: number;
   from: string;
   to: string;
-  visibility = [true, false];
+  numberOfPages: number;
+  curentPage: number;
+  paginationUsers: User[];
 
-  update (all: number, perPage: number, idStart: string, idEnd: string, pos: number) {
-    this.visibility.length = all;
-    this.numberOfUsers = all;
-    this.usersPerPage = perPage;
-    this.from = idStart;
-    this.to = idEnd;
-      console.log('before for');
-    for (let i = 0; i < pos; i++) {
-        console.log(this.visibility[0]);
-          this.visibility[0] = false;
-      }
-    for (let i = pos; i <= perPage; i++) {
-        console.log(this.visibility[1]);
-          this.visibility[1] = true;
-      }
-      for (let i = pos + perPage; i < all; i++) {
-          console.log(this.visibility[2]);
-          this.visibility[2] = false;
-      }
-}
+  config(numOfUsers: number, usersPage: number) {
+      this.numberOfUsers = numOfUsers;
+      this.usersPerPage = usersPage;
+      this.numberOfPages = numOfUsers / usersPage;
+      numOfUsers % usersPage ? this.numberOfPages++ : console.log(this.numberOfPages);
+      this.curentPage = 1;
+  }
 
   constructor() { }
 }

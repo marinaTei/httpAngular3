@@ -11,6 +11,7 @@ import {User} from '../user';
 import {eye, pencil, tools} from 'octicons';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
+
 @Component({
     selector: 'app-table-of-users',
     templateUrl: './table-of-users.component.html',
@@ -54,20 +55,18 @@ export class TableOfUsersComponent implements OnInit {
                 (data: any) => {
                     this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
                     this.globalVar.arrayOfUsers = this.allUsers;
-                    /*console.log('before update');
-                    this.paginationService.update(this.allUsers.length, 5, this.allUsers[0].id,
-                        this.allUsers[4].id, 0);
-                    console.log('before display');
-                    this.displayUsers(); */
-                    console.log(this.allUsers);
-                    this.paginationService.numberOfUsers = this.allUsers.length;
-                    console.log(this.paginationService.numberOfUsers);
+                    console.log(this.globalVar.arrayOfUsers);
+                    this.paginationService.config(this.allUsers.length, 5);
                 }
             );
     }
 
     toBool(aux: any): string {
-        if (aux === 'true' || aux === true) { return 'active'; } else if (aux === 'false' || aux === false) { return 'inactive'; }
+        if (aux === 'true' || aux === true) { return 'active'; } else
+            if (aux === 'false' || aux === false || aux === null) { return 'inactive'; } else { console.log(aux); }
+    }
+    refreshUsers(input: string) {
+        if (!input) { this.allUsers = this.globalVar.arrayOfUsers; }
     }
 
     search(text: string) {
@@ -94,8 +93,9 @@ export class TableOfUsersComponent implements OnInit {
     }
 
     open(user: User) {
+        console.log(user.id, 'open()');
         if (this.globalVar.show === true) { alert('Close without saving?'); }
-        this.globalVar.id = user.id;
+        this.globalVar.user.id = user.id;
         this.globalVar.show = !this.globalVar.show;
     }
 
@@ -105,6 +105,7 @@ export class TableOfUsersComponent implements OnInit {
     }
 
     changeToPut(user: User) {
+        console.log(user.id, 'changeToPut()');
         this.form.passUser(user);
         this.globalVar.value = 'put';
         this.open(user);
