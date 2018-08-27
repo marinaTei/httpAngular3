@@ -36,17 +36,10 @@ export class TableOfUsersComponent implements OnInit {
         this.eye = this.sanitizer.bypassSecurityTrustHtml(eye.toSVG());
         this.tools = this.sanitizer.bypassSecurityTrustHtml(tools.toSVG());
     }
-/*
+
     displayUsers() {
-        console.log('before for');
-        // this.globalVar.arrayOfUsers.length = 0;
-        for (let i = 0; i < this.paginationService.numberOfUsers; i++) {
-            if (this.paginationService.visibility[i]) {
-                console.log('before push');
-                this.globalVar.arrayOfUsers.push(this.allUsers[i]);
-            }
-        }
-    }*/
+        this.paginationService.config(this.allUsers, 5, 1);
+    }
 
     getUsers() {
 
@@ -56,7 +49,7 @@ export class TableOfUsersComponent implements OnInit {
                     this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
                     this.globalVar.arrayOfUsers = this.allUsers;
                     console.log(this.globalVar.arrayOfUsers);
-                    this.paginationService.config(this.allUsers.length, 5);
+                    this.displayUsers();
                 }
             );
     }
