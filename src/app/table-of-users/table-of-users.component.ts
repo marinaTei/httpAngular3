@@ -35,17 +35,17 @@ export class TableOfUsersComponent implements OnInit {
         this.eye = this.sanitizer.bypassSecurityTrustHtml(eye.toSVG());
         this.tools = this.sanitizer.bypassSecurityTrustHtml(tools.toSVG());
     }
-
+/*
     displayUsers() {
         console.log('before for');
-        this.globalVar.arrayOfUsers.
+        // this.globalVar.arrayOfUsers.length = 0;
         for (let i = 0; i < this.paginationService.numberOfUsers; i++) {
             if (this.paginationService.visibility[i]) {
                 console.log('before push');
                 this.globalVar.arrayOfUsers.push(this.allUsers[i]);
             }
         }
-    }
+    }*/
 
     getUsers() {
 
@@ -54,12 +54,13 @@ export class TableOfUsersComponent implements OnInit {
                 (data: any) => {
                     this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
                     this.globalVar.arrayOfUsers = this.allUsers;
-                    console.log('before update');
+                    /*console.log('before update');
                     this.paginationService.update(this.allUsers.length, 5, this.allUsers[0].id,
                         this.allUsers[4].id, 0);
                     console.log('before display');
-                    this.displayUsers();
+                    this.displayUsers(); */
                     console.log(this.allUsers);
+                    this.paginationService.numberOfUsers = this.allUsers.length;
                     console.log(this.paginationService.numberOfUsers);
                 }
             );
@@ -76,10 +77,10 @@ export class TableOfUsersComponent implements OnInit {
                 user.lastname.toString().toLowerCase().includes(text) ||
                 user.email.toString().toLowerCase().includes(text) ||
                 user.id.toString().toLowerCase().includes(text.toString()) ||
-                this.toBool(user.active).includes(text)) {
+                this.toBool(user.active).startsWith(text)) {
                 return user;
             }
-            this.displayUsers();
+            // this.displayUsers();
         });
     }
     changeToPost() {
@@ -110,12 +111,14 @@ export class TableOfUsersComponent implements OnInit {
     }
     sortTest(key: string) {
         this.globalVar.arrayOfUsers.sort(function(user1: User, user2: User): number {
+            console.log(key);
             let x = user1[key].toLowerCase();
             let y = user2[key].toLowerCase();
             if (key === 'id') {
                 x = +x.slice(3);
                 y = +y.slice(3);
             }
+            console.log(x, y);
             return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
     }

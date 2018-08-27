@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="paginationService.numberOfUsers">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
         <form class="form-inline my-2 my-lg-0">
             <button id="add" type="button" class="btn btn-dark" (click)="changeToPost()">Add New User</button>
         </form>
@@ -62,19 +62,14 @@
             </button>
             Active
         </th>
-        <th>
-            <button type="button" class="btn btn-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-                    <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/>
-                </svg>
-            </button>
+        <th style="padding-bottom: 1.2%">
             Permissions
         </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor='let user of globalVar.arrayOfUsers'>
+    <tr  *ngFor='let user of globalVar.arrayOfUsers'>
         <td id="id">{{user.id}}</td>
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>

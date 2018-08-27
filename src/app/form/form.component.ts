@@ -39,7 +39,10 @@ export class FormComponent implements OnInit {
     }
 
     deleteYes() {
-        this.op.deleteUser(this.global.id);
+        this.requestService.deleteUser(this.global.id)
+            .subscribe(
+                (data: any) => {console.log('delete'); }
+            );
         this.requestService.getAllUsers()
             .subscribe(
                 (data: any) => {
@@ -59,16 +62,20 @@ export class FormComponent implements OnInit {
 
     save() {
         if (this.global.value === 'put') {
-            // this.user.id = this.global.id;
-            this.op.updateUser(this.global.user);
+            this.requestService.updateUser(this.global.user)
+                .subscribe(
+                    (data: any) => {console.log('update'); }
+                );
         }
         if (this.global.value === 'post') {
-            this.op.postUser(this.global.user);
+            this.requestService.addUser(this.global.user)
+                .subscribe(
+                    (data: any) => {console.log('post'); }
+                );
         }
         this.requestService.getAllUsers()
             .subscribe(
                 (data: any) => {
-                    // console.log(data.rows);
                     this.global.arrayOfUsers = Object.keys(data.rows).map(it => data.rows[it]);
                     console.log(this.global.arrayOfUsers);
                 },
