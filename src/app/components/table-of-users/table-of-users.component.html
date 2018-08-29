@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="paginationService.numberOfUsers">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0">
@@ -11,6 +11,7 @@
         </div>
     </div>
 </nav>
+
 <app-form #modalPOST>
     <div modal-title>
         Add New User
@@ -148,7 +149,7 @@
     </tbody>
 </table>
 
-<div id="pagination" *ngIf="paginationService.numberOfUsers"
+<div id="pagination"
      style="width:90%; margin: auto">
     <p style="display: inline-block; width:30%; margin-top: 5px">
         Displaying {{paginationService.usersPerPage}} users ({{paginationService.from}} to {{paginationService.to}}) of

@@ -1,0 +1,20 @@
+#uploadPlace{
+    height: 70%;
+    width: auto;
+    border: 3px;
+    border: dashed;
+    border-color: gray;
+    border-radius: 10%;
+}
+
+#upload{
+    height: 280px;
+}
+
+#text{
+    font-size: 40px;
+    text-align: center;
+    padding-top: 40px;
+    color: darkgray;
+    font-family: "Courier New";
+}

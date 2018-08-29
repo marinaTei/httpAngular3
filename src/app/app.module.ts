@@ -11,6 +11,7 @@ import {GlobalService} from './services/global.service';
 import {PostComponent} from './components/post/post.component';
 import {PutComponent} from './components/put/put.component';
 import {DeleteComponent} from './components/delete/delete.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {DeleteComponent} from './components/delete/delete.component';
         FormComponent,
         PostComponent,
         PutComponent,
-        DeleteComponent
+        DeleteComponent,
+        DragAndDropDirective
     ],
     imports: [
         BrowserModule,

@@ -1,29 +1,45 @@
-<form #userForm="ngForm" name="form"> <!--(submit)="save($event)-->
+<div class="row">
+    <div class="col-md-6">
+        <form #userForm="ngForm" name="form"> <!--(submit)="save($event)-->
 
-    First Name:<br>
-    <input type="text" #firstname autocomplete="off"
-           (input)="constructUser('firstname', firstname.value)">
-    <br>
-    Last Name:<br>
-    <input type="text" #lastname autocomplete="off"
-           (input)="constructUser('lastname', lastname.value)"><br>
-    Email:<br>
-    <input type="text" #email autocomplete="off"
-           (input)="constructUser('email', email.value)"><br>
-    Birthdate:<br>
-    <input type="date" #birthdate autocomplete="off"
-           (input)="constructUser('birthdate', birthdate.value)"><br>
-    Active:
-    <input type="checkbox" #active autocomplete="off"
-           (change)="constructUser('active', active.checked)"><br>
-    Permissions:
-    Read:
-    <input type="checkbox" #read autocomplete="off"
-           (change)="constructUser('r', read.checked)">
-    Write:
-    <input type="checkbox" #write autocomplete="off"
-           (input)="constructUser('w', write.checked)">
-    Execute:
-    <input type="checkbox" #execute autocomplete="off"
-           (input)="constructUser('x', execute.checked)"><br>
-</form>
+            First Name:<br>
+            <input type="text" #firstname autocomplete="off"
+                   (input)="constructUser('firstname', firstname.value)">
+            <br>
+            Last Name:<br>
+            <input type="text" #lastname autocomplete="off"
+                   (input)="constructUser('lastname', lastname.value)"><br>
+            Email:<br>
+            <input type="text" #email autocomplete="off"
+                   (input)="constructUser('email', email.value)"><br>
+            Birthdate:<br>
+            <input type="date" #birthdate autocomplete="off"
+                   (input)="constructUser('birthdate', birthdate.value)"><br>
+            Active:
+            <input type="checkbox" #active autocomplete="off"
+                   (change)="constructUser('active', active.checked)"><br>
+            Permissions:
+            Read:
+            <input type="checkbox" #read autocomplete="off"
+                   (change)="constructUser('r', read.checked)">
+            Write:
+            <input type="checkbox" #write autocomplete="off"s
+                   (input)="constructUser('w', write.checked)">
+            Execute:
+            <input type="checkbox" #execute autocomplete="off"
+                   (input)="constructUser('x', execute.checked)"><br>
+        </form>
+    </div>
+    <div class="col-md-6" id="upload">
+        <p>Or upload file from pc:</p>
+        <div id="uploadPlace" appDragAndDrop class="showText">
+            <p *ngIf="showText" id="text">Drop file here</p>
+            <div *ngIf="!showText" id="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100" viewBox="0 0 10 16">
+                <path fill-rule="evenodd" d="M7 7V3H3v4H0l5 6 5-6H7z"/></svg>
+            </div>
+        </div>
+        <button id="uploadSearch" class="btn btn-dark">Search</button>
+        <input id="uploadPath">
+    </div>
+</div>

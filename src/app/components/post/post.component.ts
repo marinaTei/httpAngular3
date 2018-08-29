@@ -7,11 +7,13 @@ import {FormService} from '../../services/form.service';
     styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+    showText: boolean;
 
     constructor(public formService: FormService) {
     }
 
     ngOnInit() {
+        this.showText = true;
     }
 
     constructUser(attr: string, val: any) {
@@ -20,6 +22,10 @@ export class PostComponent implements OnInit {
         } else {
             this.formService.userPost[attr] = val;
         }
+    }
+
+    changeState() {
+        this.showText = !this.showText;
     }
 
 }
