@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormService} from '../../services/form.service';
 
 @Component({
-  selector: 'app-put',
-  templateUrl: './put.component.html',
-  styleUrls: ['./put.component.css']
+    selector: 'app-put',
+    templateUrl: './put.component.html',
+    styleUrls: ['./put.component.css']
 })
 export class PutComponent implements OnInit {
 
-  constructor(public formService: FormService) { }
+    constructor(public formService: FormService) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
     constructUser(attr: string, val: any) {
         if (attr === 'r' || attr === 'w' || attr === 'x') {

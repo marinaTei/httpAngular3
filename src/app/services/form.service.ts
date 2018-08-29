@@ -34,7 +34,9 @@ export class FormService {
                             }
                         );
                 },
-                (err: any)  => { console.log(err); }
+                (err: any) => {
+                    console.log(err);
+                }
             );
     }
 

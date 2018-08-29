@@ -1,9 +1,5 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {GlobalService} from '../services/global.service';
-import {UserOpsService} from '../services/user-ops.service';
-import {User} from '../user';
-import {FormService} from '../services/form.service';
-import {RequestService} from '../services/request.service';
+import {User} from '../../user';
 
 
 declare let $: any;

@@ -3,6 +3,7 @@ table {
     margin: auto;
     text-align: center;
 }
+
 th {
     text-align: center;
 }
@@ -11,51 +12,54 @@ th {
     width: 20%;
     margin: auto;
 }
+
 .ngx-pagination .li .current {
     background: darkgray;
 }
 
-#pag {/*
- width: 75%;*/
+#pag {
+    /*
+     width: 75%;*/
 }
 
 #id {
     width: 10%;
 }
 
-th button{
+th button {
     background-color: white;
     padding-bottom: 0;
 }
 
-.navbar-expand-lg{
+.navbar-expand-lg {
     width: 90%;
-    margin:auto;
+    margin: auto;
 }
 
-#navbarSupportedContent{
+#navbarSupportedContent {
     padding: 0;
 }
 
-#search{
+#search {
     width: 50%;
     display: inline-block;
 }
 
-form{
+form {
     display: inline-block;
     width: 50%;
 }
- #search input{
-     width: 50%;
-     float: right;
- }
 
- #add{
-     float: left;
- }
+#search input {
+    width: 50%;
+    float: right;
+}
 
- #list{
-     width: 20%;
-     margin: auto;
- }
+#add {
+    float: left;
+}
+
+#list {
+    width: 20%;
+    margin: auto;
+}

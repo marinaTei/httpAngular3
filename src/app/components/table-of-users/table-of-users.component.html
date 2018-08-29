@@ -114,35 +114,35 @@
     <tbody>
     <tr *ngFor='let user of globalService.arrayOfUsers'>
         <!--<div *ngIf='check(user)'>-->
-            <td id="id">{{user.id}}</td>
-            <td>{{user.firstname}}</td>
-            <td>{{user.lastname}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.birthdate | date: 'mediumDate' }}</td>
-            <td class="alert alert-danger"
-                *ngIf="user.active === false || user.active === null; else trueCase">Inactive
-            </td>
-            <ng-template #trueCase>
-                <td class="alert alert-success">Active</td>
-            </ng-template>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                        title="Read"
-                        *ngIf="user.permissions.r === true"
-                        [innerHTML]="eye"></button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                        title="Write"
-                        *ngIf="user.permissions.w === true"
-                        [innerHTML]="pencil"></button>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                        title="Execute"
-                        *ngIf="user.permissions.x === true"
-                        [innerHTML]="tools"></button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit</button>
-                <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user.id)"> Delete</button>
-            </td>
+        <td id="id">{{user.id}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.birthdate | date: 'mediumDate' }}</td>
+        <td class="alert alert-danger"
+            *ngIf="user.active === false || user.active === null; else trueCase">Inactive
+        </td>
+        <ng-template #trueCase>
+            <td class="alert alert-success">Active</td>
+        </ng-template>
+        <td>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                    title="Read"
+                    *ngIf="user.permissions.r === true"
+                    [innerHTML]="eye"></button>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                    title="Write"
+                    *ngIf="user.permissions.w === true"
+                    [innerHTML]="pencil"></button>
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                    title="Execute"
+                    *ngIf="user.permissions.x === true"
+                    [innerHTML]="tools"></button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit</button>
+            <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user.id)"> Delete</button>
+        </td>
         <!--</div>-->
     </tr>
     </tbody>

@@ -1,19 +1,19 @@
-.navbar-header{
+.navbar-header {
     height: 80px;
     width: 100%;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-size: 300%;
     margin-left: 3%;
     padding-top: 2.5%;
 }
 
-#add{
+#add {
     float: left;
 }
 
-.search{
+.search {
     float: right;
 }
 
@@ -22,6 +22,7 @@
     width: 20%;
 
 }
-.page-link{
+
+.page-link {
     color: dimgray;
 }

@@ -1,12 +1,11 @@
 import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 
-import {RequestService} from '../services/request.service';
-import {UserOpsService} from '../services/user-ops.service';
-import {FormService} from '../services/form.service';
-import {GlobalService} from '../services/global.service';
-import {PaginationService} from '../services/pagination.service';
+import {RequestService} from '../../services/request.service';
+import {FormService} from '../../services/form.service';
+import {GlobalService} from '../../services/global.service';
+import {PaginationService} from '../../services/pagination.service';
 
-import {User} from '../user';
+import {User} from '../../user';
 
 import {eye, pencil, tools} from 'octicons';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -30,9 +29,9 @@ export class TableOfUsersComponent implements OnInit {
     allUsers: User[];
     visibility = [];
 
-    constructor(private requestService: RequestService, private op: UserOpsService,
-                public formService: FormService, public globalService: GlobalService,
-                private sanitizer: DomSanitizer, public paginationService: PaginationService) {
+    constructor(private requestService: RequestService, public formService: FormService,
+                public globalService: GlobalService, private sanitizer: DomSanitizer,
+                public paginationService: PaginationService) {
     }
 
     ngOnInit() {
@@ -49,6 +48,7 @@ export class TableOfUsersComponent implements OnInit {
             this.visibility[i].state = true;
         }
     }
+
     /* check(user: User) {
         console.log('check');
         for (let i = 0; i <= this.globalService.arrayOfUsers.length; i++) {
@@ -80,15 +80,24 @@ export class TableOfUsersComponent implements OnInit {
     }
 
     toBool(aux: any): string {
-        if (aux === 'true' || aux === true) { return 'active'; } else
-            if (aux === 'false' || aux === false || aux === null) { return 'inactive'; } else { console.log(aux); }
+        if (aux === 'true' || aux === true) {
+            return 'active';
+        } else if (aux === 'false' || aux === false || aux === null) {
+            return 'inactive';
+        } else {
+            console.log(aux);
+        }
     }
+
     refreshUsers(input: string) {
-        if (!input) { this.allUsers = this.globalService.arrayOfUsers; }
+        if (!input) {
+            this.allUsers = this.globalService.arrayOfUsers;
+        }
     }
+
     search(text: string) {
         text = text.toLocaleLowerCase();
-        this.globalService.arrayOfUsers = this.allUsers.filter( user => {
+        this.globalService.arrayOfUsers = this.allUsers.filter(user => {
             if (user.firstname.toString().toLowerCase().includes(text.toString()) ||
                 user.lastname.toString().toLowerCase().includes(text) ||
                 user.email.toString().toLowerCase().includes(text) ||
@@ -104,6 +113,7 @@ export class TableOfUsersComponent implements OnInit {
         this.modalPOST.show();
 
     }
+
     saveUser() {
         console.log(this.formService.userPost);
         this.formService.add();
@@ -114,10 +124,12 @@ export class TableOfUsersComponent implements OnInit {
         this.modalDEL.show();
         this.formService.idDel = id;
     }
+
     deleteYes() {
         this.formService.delete();
         this.modalDEL.hide();
     }
+
     deleteNo() {
         this.modalDEL.hide();
     }
@@ -134,6 +146,7 @@ export class TableOfUsersComponent implements OnInit {
         this.modalPUT.show();
         console.log(user.id, 'changeToPut()');
     }
+
     changeUser() {
         console.log(this.formService.userPut);
         this.formService.update();
@@ -142,7 +155,7 @@ export class TableOfUsersComponent implements OnInit {
 
 
     sortTest(key: string) {
-        this.globalService.arrayOfUsers.sort(function(user1: User, user2: User): number {
+        this.globalService.arrayOfUsers.sort(function (user1: User, user2: User): number {
             console.log(key);
             let x = user1[key].toLowerCase();
             let y = user2[key].toLowerCase();
