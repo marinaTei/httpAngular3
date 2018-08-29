@@ -1,16 +1,58 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="paginationService.numberOfUsers">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0">
             <button id="add" type="button" class="btn btn-dark" (click)="changeToPost()">Add New User</button>
         </form>
-        <div id="search" >
-        <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search"
-               (input)="search($event.target.value)"
-               (focus)="refreshUsers($event.target.value)" >
+        <div id="search">
+            <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search"
+                   (input)="search($event.target.value)"
+                   (focus)="refreshUsers($event.target.value)">
         </div>
     </div>
 </nav>
+<app-form #modalPOST>
+    <div modal-title>
+        Add New User
+    </div>
+
+    <div modal-body>
+        <app-post></app-post>
+    </div>
+    <ng-container modal-footer>
+        <button class="btn btn-primary" (click)="saveUser()">Save</button>
+    </ng-container>
+
+</app-form>
+
+<app-form #modalPUT>
+    <div modal-title>
+        Update User with id: {{formService.userPut.id}}
+    </div>
+
+    <div modal-body>
+        <app-put></app-put>
+    </div>
+    <ng-container modal-footer>
+        <button class="btn btn-primary" (click)="changeUser()">Save</button>
+    </ng-container>
+
+</app-form>
+
+<app-form #modalDEL>
+    <div modal-title>
+        Delete User with id: {{formService.idDel}}
+    </div>
+
+    <div modal-body>
+        <app-delete></app-delete>
+    </div>
+    <ng-container modal-footer>
+        <button class="btn btn-primary" (click)="deleteYes()"> Yes</button>
+        <button class="btn btn-secondary" (click)="deleteNo()"> No</button>
+    </ng-container>
+
+</app-form>
 
 <table id='table' class="table table-striped">
     <thead>
@@ -63,43 +105,45 @@
             </button>
             Active
         </th>
-        <th style="padding-bottom: 1.2%">
+        <th>
             Permissions
         </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr  *ngFor='let user of globalVar.arrayOfUsers'>
-        <td id="id">{{user.id}}</td>
-        <td>{{user.firstname}}</td>
-        <td>{{user.lastname}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.birthdate | date: 'mediumDate' }}</td>
-        <td class="alert alert-danger"
-            *ngIf="user.active === false || user.active === null; else trueCase">Inactive
-        </td>
-        <ng-template #trueCase>
-            <td class="alert alert-success">Active</td>
-        </ng-template>
-        <td>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                    title="Read"
-                    *ngIf="user.permissions.r === true"
-                    [innerHTML]="eye"></button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                    title="Write"
-                    *ngIf="user.permissions.w === true"
-                    [innerHTML]="pencil"></button>
-            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
-                    title="Execute"
-                    *ngIf="user.permissions.x === true"
-                    [innerHTML]="tools"></button>
-        </td>
-        <td>
-            <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit</button>
-            <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user)"> Delete</button>
-        </td>
+    <tr *ngFor='let user of globalService.arrayOfUsers'>
+        <!--<div *ngIf='check(user)'>-->
+            <td id="id">{{user.id}}</td>
+            <td>{{user.firstname}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.birthdate | date: 'mediumDate' }}</td>
+            <td class="alert alert-danger"
+                *ngIf="user.active === false || user.active === null; else trueCase">Inactive
+            </td>
+            <ng-template #trueCase>
+                <td class="alert alert-success">Active</td>
+            </ng-template>
+            <td>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                        title="Read"
+                        *ngIf="user.permissions.r === true"
+                        [innerHTML]="eye"></button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                        title="Write"
+                        *ngIf="user.permissions.w === true"
+                        [innerHTML]="pencil"></button>
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                        title="Execute"
+                        *ngIf="user.permissions.x === true"
+                        [innerHTML]="tools"></button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-outline-dark" (click)="changeToPut(user)"> Edit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="changeToDelete(user.id)"> Delete</button>
+            </td>
+        <!--</div>-->
     </tr>
     </tbody>
 </table>
@@ -112,13 +156,23 @@
     <ul class="pagination justify-content-center"
         style="float: right; margin-top: 5px">
         <li class="page-item disabled">
-            <button *ngIf="paginationService.curentPage !== 1" class="page-link btn btn-outline-dark" tabindex="-1">Previous</button>
+            <button *ngIf="paginationService.curentPage !== 1" class="page-link btn btn-outline-dark" tabindex="-1">
+                Previous
+            </button>
         </li>
-        <li class="page-item"><button class="page-link btn btn-outline-dark" >1</button></li>
-        <li class="page-item"><button class="page-link btn btn-outline-dark" >2</button></li>
-        <li class="page-item"><button class="page-link btn btn-outline-dark" >3</button></li>
         <li class="page-item">
-            <button *ngIf="paginationService.curentPage !== paginationService.numberOfPages" class="page-link btn btn-outline-dark" >Next</button>
+            <button class="page-link btn btn-outline-dark">1</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link btn btn-outline-dark">2</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link btn btn-outline-dark">3</button>
+        </li>
+        <li class="page-item">
+            <button *ngIf="paginationService.curentPage !== paginationService.numberOfPages"
+                    class="page-link btn btn-outline-dark">Next
+            </button>
         </li>
     </ul>
 </div>

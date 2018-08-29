@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 
 import {RequestService} from '../services/request.service';
 import {UserOpsService} from '../services/user-ops.service';
@@ -10,6 +10,7 @@ import {User} from '../user';
 
 import {eye, pencil, tools} from 'octicons';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {FormComponent} from '../form/form.component';
 
 
 @Component({
@@ -20,13 +21,17 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 export class TableOfUsersComponent implements OnInit {
     @Input() searchText: string;
+    @ViewChild('modalPOST') modalPOST: FormComponent;
+    @ViewChild('modalPUT') modalPUT: FormComponent;
+    @ViewChild('modalDEL') modalDEL: FormComponent;
     public pencil: SafeHtml;
     public eye: SafeHtml;
     public tools: SafeHtml;
     allUsers: User[];
+    visibility = [];
 
-    constructor(private dataService: RequestService, private op: UserOpsService,
-                private form: FormService, public globalVar: GlobalService,
+    constructor(private requestService: RequestService, private op: UserOpsService,
+                public formService: FormService, public globalService: GlobalService,
                 private sanitizer: DomSanitizer, public paginationService: PaginationService) {
     }
 
@@ -38,18 +43,38 @@ export class TableOfUsersComponent implements OnInit {
     }
 
     displayUsers() {
+        console.log(this.allUsers);
         this.paginationService.config(this.allUsers, 5, 1);
+        for (let i = 0; i <= 5; i++) {
+            this.visibility[i].state = true;
+        }
     }
+    /* check(user: User) {
+        console.log('check');
+        for (let i = 0; i <= this.globalService.arrayOfUsers.length; i++) {
+            if (user.id === this.visibility[i].id) {
+                if ( this.visibility[i].state === true) { return true; } else { return false; }
+            }
+        }
+    }*/
 
     getUsers() {
 
-        this.dataService.getAllUsers()
+        this.requestService.getAllUsers()
             .subscribe(
                 (data: any) => {
+                    // const aux =  Object.keys(data.rows).map(it => data.rows[it]);
+                    // for (let i = 0; i <= this.allUsers.length; i++) {
+                    //     this.visibility.push(
+                    //         {id: aux[i].id,
+                    //             state: false}
+                    //     );
+                    //     console.log(aux);
+
                     this.allUsers = Object.keys(data.rows).map(it => data.rows[it]);
-                    this.globalVar.arrayOfUsers = this.allUsers;
-                    console.log(this.globalVar.arrayOfUsers);
-                    this.displayUsers();
+                    this.globalService.arrayOfUsers = this.allUsers;
+                    console.log(this.globalService.arrayOfUsers);
+                    // this.displayUsers();
                 }
             );
     }
@@ -59,12 +84,11 @@ export class TableOfUsersComponent implements OnInit {
             if (aux === 'false' || aux === false || aux === null) { return 'inactive'; } else { console.log(aux); }
     }
     refreshUsers(input: string) {
-        if (!input) { this.allUsers = this.globalVar.arrayOfUsers; }
+        if (!input) { this.allUsers = this.globalService.arrayOfUsers; }
     }
-
     search(text: string) {
         text = text.toLocaleLowerCase();
-        this.globalVar.arrayOfUsers = this.allUsers.filter( user => {
+        this.globalService.arrayOfUsers = this.allUsers.filter( user => {
             if (user.firstname.toString().toLowerCase().includes(text.toString()) ||
                 user.lastname.toString().toLowerCase().includes(text) ||
                 user.email.toString().toLowerCase().includes(text) ||
@@ -75,36 +99,50 @@ export class TableOfUsersComponent implements OnInit {
             // this.displayUsers();
         });
     }
+
     changeToPost() {
+        this.modalPOST.show();
 
-        if (this.globalVar.show === true) {
-            alert('Close without deleting user?');
-        }
-        this.globalVar.value = 'post';
-        this.globalVar.show = !this.globalVar.show;
-        this.globalVar.user.active = null;
+    }
+    saveUser() {
+        console.log(this.formService.userPost);
+        this.formService.add();
+        this.modalPOST.hide();
     }
 
-    open(user: User) {
-        console.log(user.id, 'open()');
-        if (this.globalVar.show === true) { alert('Close without saving?'); }
-        this.globalVar.user.id = user.id;
-        this.globalVar.show = !this.globalVar.show;
+    changeToDelete(id: string) {
+        this.modalDEL.show();
+        this.formService.idDel = id;
     }
-
-    changeToDelete(user: User) {
-        this.globalVar.value = 'del';
-        this.open(user);
+    deleteYes() {
+        this.formService.delete();
+        this.modalDEL.hide();
+    }
+    deleteNo() {
+        this.modalDEL.hide();
     }
 
     changeToPut(user: User) {
+        this.formService.userPut = user;
+        (!this.formService.userPut.active) ? this.formService.userPut.active = null : this.formService.userPut.active = true;
+        (!this.formService.userPut.permissions.r) ?
+            this.formService.userPut.permissions.r = null : this.formService.userPut.permissions.r = true;
+        (!this.formService.userPut.permissions.w) ?
+            this.formService.userPut.permissions.w = null : this.formService.userPut.permissions.w = true;
+        (!this.formService.userPut.permissions.x) ?
+            this.formService.userPut.permissions.x = null : this.formService.userPut.permissions.x = true;
+        this.modalPUT.show();
         console.log(user.id, 'changeToPut()');
-        this.form.passUser(user);
-        this.globalVar.value = 'put';
-        this.open(user);
     }
+    changeUser() {
+        console.log(this.formService.userPut);
+        this.formService.update();
+        this.modalPUT.hide();
+    }
+
+
     sortTest(key: string) {
-        this.globalVar.arrayOfUsers.sort(function(user1: User, user2: User): number {
+        this.globalService.arrayOfUsers.sort(function(user1: User, user2: User): number {
             console.log(key);
             let x = user1[key].toLowerCase();
             let y = user2[key].toLowerCase();
