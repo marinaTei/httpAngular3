@@ -12,7 +12,31 @@ export class FormService {
     userPut = <User>{firstname: '', lastname: '', email: '', birthdate: '', active: null, permissions: {r: null, w: null, x: null}};
     idDel: string;
 
+    alertText: string;
+    alertDanger = false;
+    alertSuccess = false;
+    file: FileList;
+
+    numberOfFiles = 0;
+
     constructor(private requestService: RequestService, private globalService: GlobalService) {
+    }
+
+    displayAlert(str: string, files: FileList) {
+        this.alertText = str;
+        if (str[0] === 'R') { this.alertSuccess = true; } else if (str[0] === 'P') { this.alertDanger = true; }
+        console.log(files);
+    }
+
+    hideAlert(type?: string) {
+        if (type === undefined) {
+            this.alertDanger = false;
+            this.alertSuccess = false;
+        } else if (type === 'danger') {
+            this.alertDanger = false;
+        } else if (type === 'success') {
+            this.alertSuccess = false;
+        }
     }
 
     add() {

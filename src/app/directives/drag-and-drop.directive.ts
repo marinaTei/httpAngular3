@@ -1,35 +1,52 @@
-import {Directive, HostBinding, HostListener} from '@angular/core';
+import {Directive, HostBinding, HostListener, OnInit} from '@angular/core';
+import {FormService} from '../services/form.service';
 
 @Directive({
   selector: '[appDragAndDrop]'
 })
 export class DragAndDropDirective {
-    @HostBinding('style.background') private backgroud = 'white';
-    // @HostBinding('') private backgroud= 'white';
+    numberOfFiles = 0;
+    @HostBinding('style.color') private color = 'lightgray';
+    @HostBinding('style.border-color') private borderColor = 'lightgray';
     @HostListener('dragover', ['$event']) onDragOver(event) {
+        this.formService.hideAlert();
         event.preventDefault();
         event.stopPropagation();
-        let files = event.dataTransfer.files;
-            console.log('drag over');
-        this.backgroud = 'lightgray';
+        this.color = 'darkgray';
+        this.borderColor = 'darkgray';
     }
-    @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+    @HostListener('dragleave', ['$event']) public onDragLeave(event) {
         event.preventDefault();
         event.stopPropagation();
-        console.log('drag leave');
-        this.backgroud = 'white';
+        this.color = 'lightgray';
+        this.borderColor = 'lightgray';
     }
 
     @HostListener('drop', ['$event']) public onDrop(evt) {
         evt.preventDefault();
         evt.stopPropagation();
-        let files = evt.dataTransfer.files;
-        if (files.length > 0){
-            console.log('drop');
-            this.backgroud = 'white';
-            console.log(files);
+        console.log('drop');
+        const files = evt.dataTransfer.files;
+        console.log(files);
+        if (files.length > 0) {
+            this.numberOfFiles += files.length;
+            console.log(this.numberOfFiles);
+
+            for (let i = 0; i < files.length; i++) {
+                if (files.item(i).type !== 'text/plain' && files.item(i).type !== 'application/json') {
+                    this.formService.displayAlert('Please add only .txt or .json files!', files);
+                }
+            }
+            if (!this.formService.alertDanger) { this.formService.displayAlert('Ready to save!', files); }
+            console.log(files.item(0).type); // text/plain application/json
+            this.color = 'lightgray';
+            this.borderColor = 'lightgray';
+
+            const reader = new FileReader();
+            reader.onprogress = function () { if (reader.readyState === 2) { console.log(reader.readAsText(files.item(0))); } };
         }
     }
-  constructor() { }
+
+   constructor(private formService: FormService) { }
 
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormService} from '../../services/form.service';
 
+
 @Component({
     selector: 'app-post',
     templateUrl: './post.component.html',
@@ -8,6 +9,7 @@ import {FormService} from '../../services/form.service';
 })
 export class PostComponent implements OnInit {
     showText: boolean;
+    filesNames: string[];
 
     constructor(public formService: FormService) {
     }
@@ -24,8 +26,23 @@ export class PostComponent implements OnInit {
         }
     }
 
-    changeState() {
-        this.showText = !this.showText;
+    testBrowse(files: FileList) {
+        console.log(FileList);
+        for (let i = 0; i < files.length; i++) {
+            if (files.item(i).type !== ('text/plain' || 'application/json')) {
+                console.log('danger');
+                this.formService.displayAlert('Please add only .txt or .json files!');
+            }
+        }
     }
+    hide(type: string) {
+        this.formService.hideAlert(type);
+    }
+/*
+    checkType(files: FileList) {
+        if (files.length > 0 && this.formService.alert === true) {
+            this.formService.aler = false;
+        }
+    }*/
 
 }

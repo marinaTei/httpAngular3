@@ -1,30 +1,34 @@
-<form #userForm="ngForm" name="form"> <!--(submit)="save($event)-->
+<div class="row">
+    <form #userForm="ngForm" name="form"> <!--(submit)="save($event)-->
+        <div class="col-md-6">
+            First Name:<br>
+            <input type="text" #firstname autocomplete="off" value="{{formService.userPut.firstname}}"
+                   (input)="constructUser('firstname', firstname.value)"><br>
+            Email:<br>
+            <input type="text" #email autocomplete="off" value="{{formService.userPut.email}}"
+                   (input)="constructUser('email', email.value)"><br>
+            Permissions:
+            Read:
+            <input type="checkbox" #read autocomplete="off" checked="{{formService.userPut.permissions.r}}"
+                   (change)="constructUser('r', read.checked)">
+            Write:
+            <input type="checkbox" #write autocomplete="off" checked="{{formService.userPut.permissions.w}}"
+                   (input)="constructUser('w', write.checked)">
+            Execute:
+            <input type="checkbox" #execute autocomplete="off" checked="{{formService.userPut.permissions.x}}"
+                   (input)="constructUser('x', execute.checked)"><br>
+        </div>
+        <div class="col-md-6">
 
-    First Name:<br>
-    <input type="text" #firstname autocomplete="off" value="{{formService.userPut.firstname}}"
-           (input)="constructUser('firstname', firstname.value)">
-    <br>
-    Last Name:<br>
-    <input type="text" #lastname autocomplete="off" value="{{formService.userPut.lastname}}"
-           (input)="constructUser('lastname', lastname.value)"><br>
-    Email:<br>
-    <input type="text" #email autocomplete="off" value="{{formService.userPut.email}}"
-           (input)="constructUser('email', email.value)"><br>
-    Birthdate:<br>
-    <input type="date" #birthdate autocomplete="off" value="{{formService.userPut.birthdate}}"
-           (input)="constructUser('birthdate', birthdate.value)"><br>
-    Active:
-    <input type="checkbox" #active autocomplete="off" checked="{{formService.userPut.active}}"
-           (change)="constructUser('active', active.checked)"><br>
-    Permissions:
-    Read:
-    <input type="checkbox" #read autocomplete="off" checked="{{formService.userPut.permissions.r}}"
-           (change)="constructUser('r', read.checked)">
-    Write:
-    <input type="checkbox" #write autocomplete="off" checked="{{formService.userPut.permissions.w}}"
-           (input)="constructUser('w', write.checked)">
-    Execute:
-    <input type="checkbox" #execute autocomplete="off" checked="{{formService.userPut.permissions.x}}"
-           (input)="constructUser('x', execute.checked)"><br>
-</form>
-
+            Last Name:<br>
+            <input type="text" #lastname autocomplete="off" value="{{formService.userPut.lastname}}"
+                   (input)="constructUser('lastname', lastname.value)"><br>
+            Birthdate:<br>
+            <input type="date" #birthdate autocomplete="off" value="{{formService.userPut.birthdate}}"
+                   (input)="constructUser('birthdate', birthdate.value)"><br>
+            Active:
+            <input type="checkbox" #active autocomplete="off" checked="{{formService.userPut.active}}"
+                   (change)="constructUser('active', active.checked)"><br>
+        </div>
+    </form>
+</div>

@@ -1,10 +1,16 @@
 #uploadPlace{
     height: 70%;
     width: auto;
-    border: 3px;
-    border: dashed;
-    border-color: gray;
+    border: 5px;
+    border-style: dotted;
     border-radius: 10%;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+    color: lightgray;
+    border-color: lightgray;
 }
 
 #upload{
@@ -12,9 +18,27 @@
 }
 
 #text{
-    font-size: 40px;
+    padding-top: 25px;
+}
+
+.customAlert{
+    font-weight: bold;
     text-align: center;
-    padding-top: 40px;
-    color: darkgray;
-    font-family: "Courier New";
+    font-size: large;
+}
+
+.customButton {
+    display: inline-block;
+    background: darkgray;
+    opacity: 0.9;
+    margin-top: 10%;
+    margin-left: 15%;
+}
+#upload_button input[type=file] {
+    display:none;
+}
+
+.customCol{
+   padding-left: 0;
+    padding-right: 0;
 }

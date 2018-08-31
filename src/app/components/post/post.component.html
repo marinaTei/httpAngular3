@@ -23,7 +23,7 @@
             <input type="checkbox" #read autocomplete="off"
                    (change)="constructUser('r', read.checked)">
             Write:
-            <input type="checkbox" #write autocomplete="off"s
+            <input type="checkbox" #write autocomplete="off" s
                    (input)="constructUser('w', write.checked)">
             Execute:
             <input type="checkbox" #execute autocomplete="off"
@@ -31,15 +31,63 @@
         </form>
     </div>
     <div class="col-md-6" id="upload">
-        <p>Or upload file from pc:</p>
-        <div id="uploadPlace" appDragAndDrop class="showText">
-            <p *ngIf="showText" id="text">Drop file here</p>
-            <div *ngIf="!showText" id="arrow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100" viewBox="0 0 10 16">
-                <path fill-rule="evenodd" d="M7 7V3H3v4H0l5 6 5-6H7z"/></svg>
+        <div class="row">
+            <div class="col-md-12">
+                <p>Or upload file from pc:</p>
             </div>
         </div>
-        <button id="uploadSearch" class="btn btn-dark">Search</button>
-        <input id="uploadPath">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="uploadPlace" appDragAndDrop>
+                    <p *ngIf="showText" id="text">Drop files here</p>
+                    <!--<div *ngIf="!showText" id="arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100" viewBox="0 0 10 16">
+                            <path fill-rule="evenodd" d="M7 7V3H3v4H0l5 6 5-6H7z"/>
+                        </svg>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 customCol">
+                <div id="upload_button">
+                    <label>
+                        <input type="file" ngf-select ng-model="new_files" ng-change="fs.uploadFiles(new_files)" multiple>
+                        <span class="btn btn-dark customButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 6h3V0h2v6h3l-4 4-4-4zm11-4h-4v1h4v8H1V3h4V2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1z"/>
+                            </svg>
+                            <p style="display: inline; margin-left: 5%;">Upload files</p>
+                        </span>
+                    </label>
+                </div>
+            </div>
+                <div class="col-md-8 customCol">
+                    <p *ngIf="!formService.numberOfFiles" style="margin-top: 10%; margin-left: 17%;">No files uploaded.</p>
+                    <p *ngIf="formService.numberOfFiles"></p>
+                </div>
+        </div>
     </div>
 </div>
+
+<div class="row" *ngIf="formService.alertDanger">
+    <div class="col-md-12">
+        <div class="alert alert-danger customAlert" role="alert">
+            {{ formService.alertText }}
+            <button type="button" class="close" (click)="hide('danger')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="formService.alertSuccess">
+    <div class="col-md-12">
+        <div class="alert alert-success customAlert" role="alert">
+            {{ formService.alertText }}
+            <button type="button" class="close" (click)="hide('success')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+

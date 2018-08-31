@@ -1,5 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {User} from '../../user';
+import {FormService} from '../../services/form.service';
 
 
 declare let $: any;
@@ -22,7 +23,6 @@ export class FormComponent implements OnInit {
     hide() {
         $(this.modalElem.nativeElement).modal('hide');
     }
-
 
     constructor() {
     }
